@@ -19,3 +19,6 @@ Presenting device drivers with different status than good.
 
 ## Drivers Installation
 Drivers installation can be done by two ways. By using Windows update or local drivers database. Local server have driver packs prepared for each model. This program will connect to this server and install drivers by running batch file.
+
+## Saving data
+All data of device that running this program can be saved in local MySql database located in my workplace. This data will be used in further refurbishment process.
