@@ -1,0 +1,1105 @@
+﻿<Window x:Class="Spec.Sniffer_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Spec.Sniffer_WPF"
+        xmlns:converters="clr-namespace:Spec.Sniffer_WPF.Converters"
+        xmlns:camera="clr-namespace:Spec.Sniffer_WPF.Camera"
+        mc:Ignorable="d"
+        Title="Spec Sniffer" Height="720" Width="1100" KeyDown="Window_KeyDown" Closing="Window_Closing" WindowStartupLocation="CenterScreen" >
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}" x:Key="SpecItemLabel">
+            <Setter Property="FontFamily" Value="Leelawadee UI"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="Padding" Value="0"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="SpecItemTextBlock">
+            <!--<Setter Property="Foreground" Value="#FF727272"/>-->
+            <Setter Property="FontFamily" Value="Leelawadee UI"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="5,0"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}" x:Key="ItemTextBox">
+            <Setter Property="FontFamily" Value="Leelawadee UI"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
+        <Style TargetType="{x:Type StackPanel}" x:Key="SpecItemStackPanel">
+            <Setter Property="Margin" Value="0,3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="FontFamily" Value="Leelawadee UI Semilight"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="{x:Type Border}" x:Key="TabMainBorder">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style TargetType="{x:Type Border}" x:Key="TabItemBorder">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        ShadowDepth="1"
+                        BlurRadius="3"
+                        RenderingBias="Performance"
+                        Color="#FFADB0B2"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#FFB9C3DA"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#FFD3D4D4"/>
+        </Style>
+        <Style TargetType="{x:Type Button}" x:Key="TabButton">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Padding" Value="0,10,0,10"/>
+            <Setter Property="Margin" Value="2,5,5,0"/>
+            <Setter Property="Background" Value="#FFD2D9E0"/>
+            <Setter Property="Foreground" Value="black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FFB9C3DA"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        ShadowDepth="2"
+                        BlurRadius="1"
+                        RenderingBias="Performance"
+                        Color="#FFCDD6DC"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Label}" x:Key="BatteryLabel">
+            <Setter Property="FontFamily" Value="Leelawadee UI Semilight"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="2,4,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+
+        </Style>
+        <Style TargetType="{x:Type Label}" x:Key="HeaderLabel">
+            <Setter Property="FontFamily" Value="Leelawadee UI"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="21"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Padding" Value="10,0,0,0"/>
+            <Setter Property="Opacity" Value="0.8"/>
+
+        </Style>
+        <Style TargetType="{x:Type Image}" x:Key="HeaderImage">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="Margin" Value="0,-4,0,0"/>
+        </Style>
+        <Style TargetType="{x:Type Image}" x:Key="HeaderLogo">
+            <Setter Property="Opacity" Value="0.8"/>
+            <!--<Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="Margin" Value="0,-4,0,0"/>-->
+        </Style>
+        <Style TargetType="{x:Type Image}" x:Key="ExtrasImage">
+            <!--<Setter Property="Height" Value="30"/>
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="Margin" Value="0,-4,0,0"/>-->
+            <Setter Property="MaxWidth" Value="36"/>
+            <Setter Property="Margin" Value="23,0"/>
+        </Style>
+
+        <Style TargetType="{x:Type Grid}" x:Key="DataTempleGrid">
+            <Setter Property="Background" Value="#FFD2D9E0"/>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}"  >
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Opacity" Value="0.3"/>
+        </Style>
+
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <converters:BoolToOpacityConverter x:Key="BoolToOpacity"/>
+        <converters:RunFileBtnNameConverter x:Key="RunFileBtnName"/>
+        <converters:InstallDriversBtnConverter x:Key="InstallDriversBtnName"/>
+        <converters:FileNameConverter x:Key="FileName"/>
+        <converters:HasValueToBoolConverter x:Key="HasValueToBool"/>
+        <converters:RamListToRamSizeConverter x:Key="RamListToSize"/>
+        <converters:HddListToHddSizeConverter x:Key="HddListToHddSize"/>
+        <converters:StringListToStringConverter x:Key="StringListToString"/>
+        <converters:StringListToStringNewLineConverter x:Key="StringListToStringNewLine"/>
+        <converters:OsTypeConverter x:Key="OsType"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SpecTabCommand}" Key="F9"/>
+        <KeyBinding Command="{Binding DriversTabCommand}" Key="F10"/>
+        <KeyBinding Command="{Binding DiagTabCommand}" Key="F11"/>
+        <KeyBinding Command="{Binding SaveTabCommand}" Key="F12"/>
+    </Window.InputBindings>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0" Background="#FFB8B8B8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="935*"/>
+                <ColumnDefinition Width="157*"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.Column="0">
+                <TextBlock Text="{Binding Spec.SpecSummary}"
+                           Foreground="#FFE03B16"
+                           Margin="10,0"/>
+            </Viewbox>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                <Image Source="pack://siteoforigin:,,,/Resources/network.png"
+                   Style="{StaticResource ExtrasImage}" Margin="8,0"
+                   Opacity="{Binding InternetStatus, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+
+                <Image Source="pack://siteoforigin:,,,/Resources/storages.png"
+                   Style="{StaticResource ExtrasImage}" Margin="8,0"
+                   Opacity="{Binding ShareStatus, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+
+                <Image Source="pack://siteoforigin:,,,/Resources/penDrive.png"
+                   Style="{StaticResource ExtrasImage}" Margin="8,0" 
+                   Opacity="{Binding UsbStatus, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+            </StackPanel>
+        </Grid>
+
+        <TabControl Grid.Row="1">
+
+
+            <TabItem x:Name="SpecTab" Header="Spec [F9]" Background="{x:Null}" 
+                     IsSelected="{Binding SpecTabSelected, Mode=TwoWay}" TabIndex="1">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="337*"/>
+                            <RowDefinition Height="210*"/>
+                            <RowDefinition Height="56*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource TabItemBorder}" Grid.Row="0">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="1.5*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <DockPanel Grid.Row="0">
+                                        <Image Source="pack://siteoforigin:,,,/Resources/spec.png"  Style="{StaticResource HeaderLogo}"/>
+                                        <Label Content="{Binding ModelAndChassis}" Style="{StaticResource HeaderLabel}"/>
+                                    </DockPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="2" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="S/N:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.DeviceSerial}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="3" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="CPU:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.Cpu}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="4" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="RAM:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.RamList, Mode=OneWay,Converter={StaticResource RamListToSize}}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="5" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="HDD:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.HddList, Mode=OneWay,Converter={StaticResource HddListToHddSize}}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="6" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="Optical:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.OddList, Mode=OneWay,Converter={StaticResource StringListToString}}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="7" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="Display:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.Resolution}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="8" Style="{StaticResource SpecItemStackPanel}" >
+                                        <Label Content="GPU:" Style="{StaticResource SpecItemLabel}"/>
+                                        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                                            <TextBlock Text="{Binding Spec.GpuList, Mode=OneWay,Converter={StaticResource StringListToStringNewLine}}" Style="{StaticResource SpecItemTextBlock}" />
+                                        </ScrollViewer>
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </ScrollViewer>
+
+                        </Border>
+
+                        <Border Style="{StaticResource TabItemBorder}" Grid.Row="1">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="10"/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <DockPanel Grid.Row="0">
+                                        <Image Source="pack://siteoforigin:,,,/Resources/win.png"  Style="{StaticResource HeaderLogo}"/>
+                                        <Label Content="{Binding Spec.OperatingSystem.Name}" Style="{StaticResource HeaderLabel}"/>
+                                    </DockPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="2" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="Build:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.OperatingSystem.BuildNumber}" Style="{StaticResource SpecItemTextBlock}" Padding="5,0,0,0"/>
+                                        <TextBlock Text="{Binding Spec.OperatingSystem.IsPortable, Converter={StaticResource OsType}}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="3" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="Languages:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.OperatingSystem.Languages}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="4" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="Install Key:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.OperatingSystem.SerialNumber}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Grid.Row="5" Style="{StaticResource SpecItemStackPanel}">
+                                        <Label Content="License Key:" Style="{StaticResource SpecItemLabel}"/>
+                                        <TextBlock Text="{Binding Spec.OperatingSystem.LicenseKey}" Style="{StaticResource SpecItemTextBlock}"/>
+                                    </StackPanel>
+
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+
+                        <Border Style="{StaticResource TabItemBorder}" Padding="4" Grid.Row="2">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="pack://siteoforigin:,,,/Resources/eth.png" Grid.Column="0"
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.EthOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="180"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image>
+                                <Image Source="pack://siteoforigin:,,,/Resources/wlan.png" Grid.Column="1" 
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.WlanOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+                                <Image Source="pack://siteoforigin:,,,/Resources/wwan.png" Grid.Column="2" 
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.WwanOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+                                <Image Source="pack://siteoforigin:,,,/Resources/bt.png" Grid.Column="3" 
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.BluetoothOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+                                <Image Source="pack://siteoforigin:,,,/Resources/cam.png" Grid.Column="4" 
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.CamOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+                                <Image Source="pack://siteoforigin:,,,/Resources/fpr.png" Grid.Column="5" 
+                                       Style="{StaticResource ExtrasImage}" 
+                                       Opacity="{Binding Spec.FprOpacity, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"/>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="337*"/>
+                            <RowDefinition Height="266*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Style="{StaticResource TabItemBorder}" Grid.Row="0">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Image Source="pack://siteoforigin:,,,/Resources/memory.png"  Style="{StaticResource HeaderLogo}" RenderTransformOrigin="0.5,0.5">
+                                        <Image.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="90"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Image.RenderTransform>
+                                    </Image>
+                                    <Label Content="Memory" Style="{StaticResource HeaderLabel}"/>
+
+                                </DockPanel>
+
+                                <DataGrid ItemsSource="{Binding Spec.RamList}"
+                                          Grid.Row="2"
+                                          Margin="5,-5,5,5"
+                                          AutoGenerateColumns="False"
+                                          RowDetailsVisibilityMode="Visible"
+                                          CanUserAddRows="False"
+                                          Background="Transparent"
+                                          BorderBrush="Transparent"
+                                          BorderThickness="0"
+                                          RowBackground="Transparent" IsReadOnly="True"
+                                          GridLinesVisibility="None">
+                                    <DataGrid.Columns >
+
+                                        <DataGridTextColumn
+                                                Binding="{Binding Location}"
+                                                IsReadOnly="True" 
+                                                FontFamily="Yu Gothic UI" 
+                                                FontWeight="Bold"/>
+                                    </DataGrid.Columns>
+
+                                    <DataGrid.RowDetailsTemplate>
+                                        <DataTemplate >
+                                            <Grid Style="{StaticResource DataTempleGrid}">
+                                                <StackPanel Grid.Column="0" Margin="5,0">
+                                                    <TextBlock Text="{Binding RamInfo}"/>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="P/N:" Style="{StaticResource SpecItemLabel}"/>
+                                                        <TextBlock Text="{Binding PartNumber}" Margin="5,0,0,0"/>
+                                                        <Label Content="S/N:" Style="{StaticResource SpecItemLabel}" Margin="10,0,0,0"/>
+                                                        <TextBlock Text="{Binding Serial}" Margin="5,0,0,0"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGrid.RowDetailsTemplate>
+
+                                </DataGrid>
+
+
+
+
+                            </Grid>
+
+                        </Border>
+
+                        <Border Style="{StaticResource TabItemBorder}" Grid.Row="1">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Image Source="pack://siteoforigin:,,,/Resources/hdd.png"  Style="{StaticResource HeaderLogo}" RenderTransformOrigin="0.5,0.5" Margin="-2,-4">
+                                        <Image.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="-90"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Image.RenderTransform>
+                                    </Image>
+                                    <Label Content="Storage" Style="{StaticResource HeaderLabel}"/>
+
+                                </DockPanel>
+
+                                <DataGrid ItemsSource="{Binding Spec.HddList}"
+                                          Grid.Row="2"
+                                          Margin="5,-5,5,5"
+                                          AutoGenerateColumns="False"
+                                          RowDetailsVisibilityMode="Visible"
+                                          CanUserAddRows="False"
+                                          Background="Transparent"
+                                          BorderBrush="Transparent"
+                                          BorderThickness="0"
+                                          RowBackground="Transparent" IsReadOnly="True"
+                                          GridLinesVisibility="None">
+                                    <DataGrid.Columns >
+
+                                        <DataGridTextColumn
+                                                Binding="{Binding Model}"
+                                                IsReadOnly="True" 
+                                                FontFamily="Yu Gothic UI" 
+                                                FontWeight="Bold"/>
+                                    </DataGrid.Columns>
+
+                                    <DataGrid.RowDetailsTemplate>
+                                        <DataTemplate >
+
+                                            <Grid Style="{StaticResource DataTempleGrid}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="1" Margin="2,0,0,10">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="Size:" Style="{StaticResource SpecItemLabel}"/>
+                                                        <TextBlock Text="{Binding Size}" Margin="5,0,0,0"/>
+
+                                                        <Label Content="Bus Type:" Style="{StaticResource SpecItemLabel}" Margin="10,0,0,0"/>
+                                                        <TextBlock Text="{Binding BusType}" Margin="5,0,0,0"/>
+
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label Content="S/N:" Style="{StaticResource SpecItemLabel}"/>
+                                                        <TextBlock Text="{Binding Serial}" Margin="5,0,0,0"/>
+                                                    </StackPanel>
+
+                                                </StackPanel>
+
+
+                                                <Image Source="pack://siteoforigin:,,,/Resources/error.png" 
+                                                           Grid.Column="0"
+                                                           Style="{StaticResource HeaderImage}"
+                                                           Opacity="{Binding Warning, Converter={StaticResource BoolToOpacity}, Mode=OneWay}"
+                                                           Height="40" Width="40"/>
+
+
+                                            </Grid>
+
+                                        </DataTemplate>
+                                    </DataGrid.RowDetailsTemplate>
+
+                                </DataGrid>
+
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+
+
+            <TabItem x:Name="DriversTab" Header="Drivers [F10]" Background="{x:Null}" IsSelected="{Binding DriversTabSelected, Mode=TwoWay}">
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding InstallDriversCommand}" Key="F1"/>
+                    <KeyBinding Command="{Binding WinUpdateCommand}" Key="F2"/>
+                    <KeyBinding Command="{Binding RunFileCommand}" Key="F3"/>
+                </TabItem.InputBindings>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource TabItemBorder}" >
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="1"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Grid.Row="0">
+                                <Image Source="pack://siteoforigin:,,,/Resources/DriversError.png"  Style="{StaticResource HeaderLogo}"/>
+                                <Label Content="Missing Drivers" Style="{StaticResource HeaderLabel}"/>
+                            </DockPanel>
+
+                            <DataGrid ItemsSource="{Binding Spec.MissingDrivers}"
+                                          Grid.Row="2"
+                                              Margin="0,-5,0,0"
+                                              AutoGenerateColumns="False"
+                                              RowDetailsVisibilityMode="Visible"
+                                              CanUserAddRows="False"
+                                              Background="Transparent"
+                                              BorderBrush="Transparent"
+                                              BorderThickness="0"
+                                              RowBackground="Transparent" IsReadOnly="True"
+                                              GridLinesVisibility="None" >
+                                <DataGrid.Columns >
+
+                                    <DataGridTextColumn Binding="{Binding Caption}"
+                                                        IsReadOnly="True" 
+                                                        FontFamily="Malgun Gothic" 
+                                                        FontSize="14" />
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="247*"/>
+                            <RowDefinition Height="356*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Style="{StaticResource TabItemBorder}">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Image Source="pack://siteoforigin:,,,/Resources/searchFolder.png"  Style="{StaticResource HeaderLogo}"/>
+                                    <Label Content="Drivers" Style="{StaticResource HeaderLabel}"/>
+                                </DockPanel>
+
+                                <StackPanel Grid.Row="2">
+                                    <Label Content="Drivers pack list:" Style="{StaticResource SpecItemLabel}" HorizontalAlignment="Left"/>
+                                    <ComboBox x:Name="DriverPackComboBox" Opacity="1" Margin="2,5"
+                                              ItemsSource="{Binding DriversFolder.Folders}"
+                                              SelectedItem="{Binding DriversFolder.SelectedFolder, Mode=TwoWay}"/>
+
+                                    <Button Style="{StaticResource TabButton}" Margin="2,5"
+                                            Command="{Binding InstallDriversCommand}"
+                                            IsEnabled="{Binding DriversFolder.SelectedFolder, Converter={StaticResource HasValueToBool}, Mode=OneWay}"
+                                            Content="Run Drivers Pack [F1]"/>
+                                    <Button Style="{StaticResource TabButton}" Margin="2,5"
+                                            Command="{Binding WinUpdateCommand}"
+                                            Content="Run Windows Update [F2]" Background="#FFDDE0E4"/>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+
+                        <Border Grid.Row="1" Style="{StaticResource TabItemBorder}" DockPanel.Dock="Top">
+
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="27"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                    <Image Source="pack://siteoforigin:,,,/Resources/openFolder.png" 
+                                           Style="{StaticResource HeaderImage}"/>
+                                    <Label Content="Related Files"
+                                           Style="{StaticResource HeaderLabel}"
+                                           HorizontalAlignment="Left"/>
+                                </StackPanel>
+
+                                <!--<DataGrid ItemsSource="{Binding DriversFolder.Files}"
+                                          SelectedItem="{Binding DriversFolder.SelectedFile, Mode=OneWayToSource}"
+                                          Grid.Row="1"
+                                          Margin="5,10,5,5"
+                                          AutoGenerateColumns="False"
+                                          RowDetailsVisibilityMode="Visible"
+                                          CanUserAddRows="False"
+                                          Background="Transparent"
+                                          BorderBrush="Transparent"
+                                          BorderThickness="0"
+                                          RowBackground="Transparent"
+                                          GridLinesVisibility="None">
+                                    <DataGrid.Columns >
+
+                                        <DataGridTextColumn
+                                            Binding="{Binding ''}"
+                                            IsReadOnly="True" 
+                                            FontFamily="Yu Gothic UI" 
+                                            FontSize="16"/>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>-->
+
+                                <ListBox Grid.Row="1" ItemsSource="{Binding DriversFolder.Files}"
+                                         SelectedItem="{Binding DriversFolder.SelectedFile, Mode=OneWayToSource}" Background="#FFF1F2F3" Margin="0,5,0,0"/>
+                                <Button  Style="{StaticResource TabButton}" Grid.Row="2"
+                                Command="{Binding RunFileCommand}"
+                                IsEnabled="{Binding DriversFolder.SelectedFile, Converter={StaticResource HasValueToBool}, Mode=OneWay}"
+                                Content="Run File [F3]" Margin="0,5,0,0"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
+            <TabItem x:Name="DiagTab" Header="Diagnostics [F11]" Background="{x:Null}" IsSelected="{Binding DiagTabSelected, Mode=TwoWay}">
+
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding ScreenCommand}" Key="D1"/>
+                    <KeyBinding Command="{Binding CameraCommand}" Key="D2"/>
+                    <KeyBinding Command="{Binding AudioTestCommand}" Key="D3"/>
+                    <KeyBinding Command="{Binding KeyboardCommand}" Key="D4"/>
+                    <KeyBinding Command="{Binding DevmgmtCommand}" Key="D5"/>
+                    <KeyBinding Command="{Binding DiskmgmtCommand}" Key="D6"/>
+                    <KeyBinding Command="{Binding HdTuneCommand}" Key="D7"/>
+                    <KeyBinding Command="{Binding ShowKeyCommand}" Key="D8"/>
+                    <KeyBinding Command="{Binding OcctCommand}" Key="D9"/>
+                </TabItem.InputBindings>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Style="{StaticResource TabItemBorder}" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DockPanel Grid.Row="0">
+                                    <Image Source="pack://siteoforigin:,,,/Resources/DriversError.png"  Style="{StaticResource HeaderLogo}"/>
+                                    <Label Content="Driver Errors" Style="{StaticResource HeaderLabel}"/>
+                                </DockPanel>
+
+                                <DataGrid ItemsSource="{Binding Spec.DriversErrors}"
+                                          Grid.Row="2"
+                                              Margin="0,-5,0,0"
+                                              AutoGenerateColumns="False"
+                                              RowDetailsVisibilityMode="Visible"
+                                              CanUserAddRows="False"
+                                              Background="Transparent"
+                                              BorderBrush="Transparent"
+                                              BorderThickness="0"
+                                              RowBackground="Transparent" IsReadOnly="True"
+                                              GridLinesVisibility="None" >
+                                    <DataGrid.Columns >
+
+                                        <DataGridTextColumn Binding="{Binding Caption}"
+                                                        IsReadOnly="True" 
+                                                        FontFamily="Malgun Gothic" 
+                                                        FontSize="14" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Style="{StaticResource TabItemBorder}">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="213*"/>
+                                        <RowDefinition Height="34*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <camera:WebcamDevice VideoSourceId="{Binding SelectedVideoDevice, Converter={StaticResource MediaInformationConverter}}"
+                                            VideoPreviewWidth="auto"
+                                            VideoPreviewHeight="auto"
+                                            Visibility="{Binding CamVisibility, Converter={StaticResource BoolToVisibility}}"/>
+
+                                    <ComboBox Grid.Row="1"
+                                                  Margin="0,5,0,0"
+                                                  DisplayMemberPath="DisplayName"
+                                                  ItemsSource="{Binding MediaDeviceList}"
+                                                  SelectedItem="{Binding SelectedVideoDevice}"
+                                                  Background="Transparent"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Row="1" Style="{StaticResource TabItemBorder}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="1"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <DockPanel Grid.Row="0">
+                                        <Image Source="pack://siteoforigin:,,,/Resources/DriversError.png"  Style="{StaticResource HeaderLogo}"/>
+                                        <Label Content="Device Batteries" Style="{StaticResource HeaderLabel}"/>
+                                    </DockPanel>
+
+                                    <DataGrid ItemsSource="{Binding Spec.Batteries}" Grid.Row="2"
+                                              Margin="5,-5,5,5"
+                                              AutoGenerateColumns="False"
+                                              RowDetailsVisibilityMode="Visible"
+                                              CanUserAddRows="False"
+                                              Background="Transparent"
+                                              BorderBrush="Transparent"
+                                              BorderThickness="0"
+                                              RowBackground="Transparent" IsReadOnly="True"
+                                              MaxHeight="215"
+                                              GridLinesVisibility="None">
+                                        <DataGrid.Columns >
+
+                                            <DataGridTextColumn
+                                                Binding="{Binding HealthAndName}"
+                                                IsReadOnly="True" 
+                                                FontFamily="Yu Gothic UI" 
+                                                FontWeight="Bold"/>
+                                        </DataGrid.Columns>
+                                        <DataGrid.RowDetailsTemplate>
+                                            <DataTemplate >
+
+                                                <Grid Style="{StaticResource DataTempleGrid}">
+                                                    <StackPanel Grid.Column="0" Margin="10,5,0,5">
+                                                        <StackPanel Orientation="Horizontal">
+
+                                                            <Label Content="Power left:" Style="{StaticResource SpecItemLabel}"/>
+                                                            <TextBlock Text="{Binding PowerLeft}" Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding ChargeRate}" Margin="5,0,0,0"/>
+
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="S/N:" Style="{StaticResource SpecItemLabel}"/>
+                                                            <TextBlock Text="{Binding Serial}" Margin="5,0,0,0"/>
+                                                        </StackPanel>
+
+                                                    </StackPanel>
+                                                </Grid>
+
+                                            </DataTemplate>
+                                        </DataGrid.RowDetailsTemplate>
+
+                                    </DataGrid>
+                                </Grid>
+
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+
+
+                    <StackPanel Grid.Column="1">
+                        <Button Content="Screen [1]" Style="{StaticResource TabButton}" Command="{Binding ScreenCommand}"/>
+                        <Button Content="Camera [2]" Style="{StaticResource TabButton}" Command="{Binding CameraCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="Audio IO [3]" Style="{StaticResource TabButton}" Command="{Binding AudioTestCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="Keyboard [4]" Style="{StaticResource TabButton}" Command="{Binding KeyboardCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="Device Manager [5]" Style="{StaticResource TabButton}" Command="{Binding DevmgmtCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="Disk Manager [6]" Style="{StaticResource TabButton}" Command="{Binding DiskmgmtCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="HDD Tune [7]" Style="{StaticResource TabButton}" Command="{Binding HdTuneCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="ShowKey Plus [8]" Style="{StaticResource TabButton}" Command="{Binding ShowKeyCommand}" IsEnabled="{Binding UsbStatus}"/>
+                        <Button Content="OCCT [9]" Style="{StaticResource TabButton}" Command="{Binding OcctCommand}" IsEnabled="{Binding UsbStatus}"/>
+                    </StackPanel>
+
+                </Grid>
+
+            </TabItem>
+
+
+            <TabItem x:Name="SaveTab" Header="Save [F12]" IsSelected="{Binding SaveTabSelected, Mode=TwoWay}">
+                <TabItem.InputBindings>
+                    <KeyBinding Command="{Binding SoSaveCommand}" Key="F1"/>
+                    <KeyBinding Command="{Binding PoSaveCommand}" Key="F2"/>
+                    <KeyBinding Command="{Binding RmaSaveCommand}" Key="F3"/>
+                    <KeyBinding Command="{Binding OtherSaveCommand}" Key="F4"/>
+                    <KeyBinding Command="{Binding SaveLicenseCommand}" Key="F6"/>
+                </TabItem.InputBindings>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="298*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource TabItemBorder}" >
+
+                        <DockPanel >
+
+                            <Label Content="Sale Order:" Style="{StaticResource HeaderLabel}" Margin="5,-3,-5,-5"/>
+                            <TextBox Width="120" Style="{StaticResource ItemTextBox}" Text="{Binding PreviousSettings.Reference, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" CharacterCasing="Upper" MaxLength="6"/>
+
+                            <Label Content="User:" Style="{StaticResource HeaderLabel}" Margin="5,-3,-5,-5"/>
+                            <TextBox Width="90" Style="{StaticResource ItemTextBox}" Text="{Binding PreviousSettings.Rp, UpdateSourceTrigger=PropertyChanged}" MaxLength="6" CharacterCasing="Upper" MaxLines="1"/>
+
+                            <Label Content="License label:" Style="{StaticResource HeaderLabel}" Margin="5,-3,5,-5" />
+                            <ComboBox IsEditable="True" Opacity="1"  Text="{Binding PreviousSettings.LicenseLabel, UpdateSourceTrigger=PropertyChanged}" Width="280" HorizontalAlignment="Left">
+                                <ComboBoxItem Content="Win10 Pro CMAR"/>
+                                <ComboBoxItem Content="Win10 Pro Citizen"/>
+                                <ComboBoxItem Content="Win10 Home CMAR"/>
+                                <ComboBoxItem Content="Win10 Pro OEM"/>
+                                <ComboBoxItem Content="Win10 Home OEM"/>
+                                <ComboBoxItem Content="Win7 Pro COA"/>
+                                <ComboBoxItem Content="Win7 Home Premium COA"/>
+                                <ComboBoxItem Content="Win8 OEM"/>
+                                <ComboBoxItem Content="No COA"/>
+                            </ComboBox>
+
+                        </DockPanel>
+
+                    </Border>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource TabItemBorder}">
+
+                            <StackPanel>
+                                <DockPanel>
+                                    <Image Source="pack://siteoforigin:,,,/Resources/storages.png" 
+                                       Style="{StaticResource HeaderImage}" Height="33" Width="29" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                    <Label Content="Specification Save"
+                                       Style="{StaticResource HeaderLabel}" Margin="0,5,0,0" />
+
+                                </DockPanel>
+                                <Label Content="Comments:"
+                                       Style="{StaticResource SpecItemLabel}" HorizontalAlignment="Left"/>
+                                <TextBox  TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"  Text="{Binding PreviousSettings.Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Height="94" />
+
+                                <Grid Margin="0,2,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Button Content="SO [F1]" 
+                                            Grid.Column="0"
+                                            Height="45" 
+                                            Background="#FFE3E5E6"
+                                            Style="{StaticResource TabButton}"
+                                            Command="{Binding SoSaveCommand}" Margin="0,5,5,0"  IsEnabled="{Binding UsbStatus}"/>
+                                    
+                                    <Button Content="PO [F2]" 
+                                            Grid.Column="1"
+                                            Height="45" 
+                                            Background="#FFE3E5E6"
+                                            Style="{StaticResource TabButton}"
+                                            Command="{Binding PoSaveCommand}" Margin="5,5,5,0"  IsEnabled="{Binding UsbStatus}"/>
+
+                                    <Button Content="RMA [F3]" 
+                                            Grid.Column="2"
+                                            Height="45" 
+                                            Background="#FFE3E5E6"
+                                            Style="{StaticResource TabButton}"
+                                            Command="{Binding RmaSaveCommand}" Margin="5,5,5,0"  IsEnabled="{Binding UsbStatus}"/>
+
+                                    <Button Content="Other [F4]" 
+                                            Grid.Column="3"
+                                            Height="45" 
+                                            Background="#FFE3E5E6"
+                                            Style="{StaticResource TabButton}"
+                                            Command="{Binding OtherSaveCommand}" Margin="5,5,0,0"  IsEnabled="{Binding UsbStatus}"/>
+
+
+                                </Grid>
+
+                            </StackPanel>
+
+                        </Border>
+
+
+                        <Border Grid.Column="1" Style="{StaticResource TabItemBorder}">
+
+                            <StackPanel>
+                                <DockPanel >
+                                    <Image Source="pack://siteoforigin:,,,/Resources/storages.png" 
+                                       Style="{StaticResource HeaderImage}" Height="26" Width="29" VerticalAlignment="Top"/>
+                                    <Label Content="License Report"
+                                       Style="{StaticResource HeaderLabel}" Height="40"/>
+                                </DockPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Label Content="New:" Style="{StaticResource SpecItemLabel}" Width="54" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="180" Style="{StaticResource ItemTextBox}"
+                                             Text="{Binding NewCmar, UpdateSourceTrigger=PropertyChanged}" MaxLength="14" Margin="5,0"/>
+
+                                    <Label Content="Old:" Style="{StaticResource SpecItemLabel}" Width="43" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="180" Style="{StaticResource ItemTextBox}"
+                                             Text="{Binding OldCoa, UpdateSourceTrigger=PropertyChanged}" MaxLength="14" Margin="5,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,1">
+                                    <Label Content="Type:" Style="{StaticResource SpecItemLabel}" Width="54" HorizontalContentAlignment="Right"/>
+                                    <ComboBox IsEditable="True" Opacity="1"  Text="{Binding DeviceType, UpdateSourceTrigger=PropertyChanged}" Width="180" HorizontalAlignment="Left" Height="26" Margin="5,0">
+                                        <ComboBoxItem Content="Notebook"/>
+                                        <ComboBoxItem Content="PC"/>
+                                        <ComboBoxItem Content="Tablet"/>
+                                        <ComboBoxItem Content="Server"/>
+                                    </ComboBox>
+                                    <Label Content="Mfgr:" Style="{StaticResource SpecItemLabel}" Width="44"/>
+                                    <ComboBox IsEditable="True" Opacity="1"  Text="{Binding Spec.Manufacturer, UpdateSourceTrigger=PropertyChanged}" Width="180" HorizontalAlignment="Left" Height="26" Margin="5,0">
+                                        <ComboBoxItem Content="DELL"/>
+                                        <ComboBoxItem Content="HP"/>
+                                        <ComboBoxItem Content="Lenovo"/>
+                                        <ComboBoxItem Content="FUJITSU"/>
+                                        <ComboBoxItem Content="ASUS"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,1">
+                                    <Label Content="Model:" Style="{StaticResource SpecItemLabel}" Width="54" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="180" Style="{StaticResource ItemTextBox}"
+                                             Text="{Binding Spec.DeviceModel, UpdateSourceTrigger=PropertyChanged}" MaxLength="14" Margin="5,0"/>
+
+                                    <Label Content="CPU:" Style="{StaticResource SpecItemLabel}" Width="44"/>
+                                    <TextBox Width="180" Style="{StaticResource ItemTextBox}"
+                                             Text="{Binding Spec.Cpu, UpdateSourceTrigger=PropertyChanged}" MaxLength="14" Margin="5,0"/>
+                                </StackPanel>
+
+
+
+                                <StackPanel Orientation="Horizontal" Margin="0,1">
+                                    <Label Content="S/N:" Style="{StaticResource SpecItemLabel}" Width="54" HorizontalContentAlignment="Right"/>
+                                    <TextBox Width="414" Style="{StaticResource ItemTextBox}"
+                                             Text="{Binding Spec.DeviceSerial, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" CharacterCasing="Upper"/>
+                                </StackPanel>
+
+                                <Button Content="Report License [F6]" 
+                            Height="45" 
+                            Background="#FFE3E5E6"
+                            Style="{StaticResource TabButton}"
+                            Command="{Binding SaveLicenseCommand}" Margin="0,4,0,0"  IsEnabled="{Binding UsbStatus}"/>
+
+                            </StackPanel>
+
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource TabItemBorder}" >
+                        <DockPanel >
+                            <DataGrid ItemsSource="{Binding SpecDataTable, Mode=OneWay}"
+                                      CanUserAddRows="False"
+                                      AutoGenerateColumns="False"
+                                      Background="Transparent"
+                                      BorderBrush="Transparent"
+                                      BorderThickness="0"
+                                      RowBackground="Transparent" IsReadOnly="True"
+                                      GridLinesVisibility="None"
+                                      AlternatingRowBackground="#FFBAE8E0"
+                                      FontSize="14" Margin="0,0,0,0">
+
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn
+                                                    Header=" RP"
+                                                    Binding="{Binding rp}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="45"/>
+                                    <DataGridTextColumn
+                                                    Header=" SO"
+                                                    Binding="{Binding SO}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="50"/>
+
+                                    <DataGridTextColumn
+                                                    Header=" Device Description"
+                                                    Binding="{Binding Description}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="550"/>
+                                    <DataGridTextColumn
+                                                    Header=" Device Serial"
+                                                    Binding="{Binding serial}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="180"/>
+                                    <DataGridTextColumn
+                                                    Header=" CMAR"
+                                                    Binding="{Binding CMAR}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="105"/>
+                                    <DataGridTextColumn
+                                                    Header=" Save Date"
+                                                    Binding="{Binding timeStamp}"
+                                                    IsReadOnly="True" 
+                                                    FontFamily="Yu Gothic UI" 
+                                                    FontWeight="Normal"
+                                                    Width="100"/>
+                                    <DataGridTextColumn
+                                        Header=" Comments"
+                                        Binding="{Binding comments}"
+                                        IsReadOnly="True" 
+                                        FontFamily="Yu Gothic UI" 
+                                        FontWeight="Bold"
+                                        Width="auto"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </DockPanel>
+
+
+                    </Border>
+                </Grid>
+
+            </TabItem>
+
+
+        </TabControl>
+
+    </Grid>
+</Window>

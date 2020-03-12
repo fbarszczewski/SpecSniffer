@@ -1,0 +1,10 @@
+﻿<Application x:Class="Spec.Sniffer_WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Spec.Sniffer_WPF"
+             xmlns:camera="clr-namespace:Spec.Sniffer_WPF.Camera"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <camera:MediaInformationConverter x:Key="MediaInformationConverter" />
+    </Application.Resources>
+</Application>
