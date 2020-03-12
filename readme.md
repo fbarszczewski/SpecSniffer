@@ -16,3 +16,6 @@ User can check camera and microphone input and perform speakers test.
 Displaying battery health charging rate and power left helps user indicating if battery is defected.
 #### Device Drivers
 Presenting device drivers with different status than good.
+
+## Drivers Installation
+Drivers installation can be done by two ways. By using Windows update or local drivers database. Local server have driver packs prepared for each model. This program will connect to this server and install drivers by running batch file.
