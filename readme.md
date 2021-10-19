@@ -1,11 +1,12 @@
 # Overall Description
-Program created for needs in my workplace in refubrish process. Its main purpose is to check hardware specification of Windows based devices, basic diagnostics, installing drivers and saving hardware info of device in database.
+This program was created because of the need for a tool that would quickly present the specifications, give the ability to perform basic equipment diagnostics and inventory this data about the equipment in the database.
 
 ## Hardware Specification
-All hardware data is gained by querying through Windows Management Instrumentation (WMI) classes. In some cases like when getting hard drive S.M.A.R.T data Windows require administrator privileges. That's why by default this program is runned 'as admin...'.
+All hardware data are collected by querying through Windows Management Instrumentation (WMI) classes. 
+In some cases like getting hard drive S.M.A.R.T data Windows require administrator privileges. For this reason, by default  it runs with admin privilege's. 
 
 ## Diagnostics
-By using this app You can perform some basic diagnostics of device.
+By using this app You can perform some basic diagnostics of device running on Windows 10.
 #### S.M.A.R.T Check
 If hard drive connected to device have rellocated sectors program will inform user by displaying explamation mark near coruppted hdd.
 #### Screen Test
