@@ -1,5 +1,6 @@
 # Overall Description
-This program was created because of the need for a tool that would quickly present the specifications, give the ability to perform basic equipment diagnostics and inventory this data about the equipment in the database.
+This is old program i created couple years ago to help me and my coworkers check specification and test windows based laptops & PCs.
+
 
 ## Hardware Specification
 All hardware data are collected by querying through Windows Management Instrumentation (WMI) classes. 
